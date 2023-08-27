@@ -1,0 +1,98 @@
+2a
+Derivation:
+S
+-> S + N
+-> N + N
+-> 2 + N
+-> 2 + 3
+
+Parse tree:
+   S
+ / | \
+S  +  N
+|     |
+N     3
+|
+2
+
+2b
+Derivation:
+S
+-> S + N
+-> S + N + N
+-> N + N + N
+-> 5 + N + N
+-> 5 + 8 + N
+-> 5 + 8 + 9
+
+Parse tree:
+      S
+    / | \
+   S  +  N
+ / | \   |
+S  +  N  9
+|     |
+N     8
+|
+5
+
+3
+Tree 1:
+      S
+    / | \
+   S  *  S
+ / | \   |
+S  *  S  N
+|     |  |
+N     N  5
+|     |
+3     4
+
+Tree 2:
+     S
+   / | \
+  S  *  S  
+  |   / | \ 
+  N  S  *  S
+  |  |     |
+  3  N     N
+     |     |
+     4     5
+
+4. 
+parse tree:
+      S
+    / | \
+   S  +  T
+ / | \   |
+S  *  T  5
+|     |  
+T     4 
+|     
+3     
+
+6b
+parse tree:
+	      Expr
+	     /  |  \
+	 Expr  and  term
+       |       /  |  \
+     term    term or bool
+    /  |  \   |       |
+ term or bool bool   false
+   |      |   |
+ bool    true true
+   |
+ false
+
+7a
+ Parse tree 2:
+                  Expr
+	         /  |  \
+	 Expr   *    Expr
+            |            /  |  \
+        Num    Expr /  Expr
+            |         |            |
+            1      Num    Num
+                       |            |
+                       1            1

@@ -1,0 +1,168 @@
+true  = λx. λy. x
+false = λx. λy. y
+
+not = λa. (a false) true
+and = λa. (λb. ((a b) a))
+or  = λa. (λb. ((a a) b))
+if  = λb. (λt. (λe. ((b t) e)))
+
+----------------------------------------
+
+    ((and false) true)
+
+==> (substitute and defn from above)
+
+    (((λa. (λb. ((a b) a))) false) true)
+    
+==> E-App1 (via E-App-Abs)
+
+    ((λb. ((false b) false)) true)
+
+==> E-App-Abs
+    
+    ((false true) false)
+
+==> expand def'n false
+    
+    (((λx. λy. y)) true) false)
+
+==> E-App1 (via E-App-Abs)
+
+    ((λy. y) false)
+
+==> E-App-Abs
+
+    false
+
+
+Homework 2
+Isaac Kim
+Professor Snyder
+CS 463
+Feb 10, 2023
+
+1.1 
+	((λn.n-3)8)
+==> E-App-Abs
+	8-3
+==> E-Sub
+	5
+
+1.2
+	((λa.a+1)(2+3))
+==> E-App2 via E-Add
+	((λa.a+1)(5))
+==> E-App-Abs
+	5+1
+==> E-Add
+	6
+
+1.3
+	( ( (λx. (λy. if (x=y) x 0) ) (1+4)) (2*3))
+==> E-App2 via E-Add
+	( ( (λx. (λy. if (x=y) x 0) ) 5) (2*3))
+==> E-App-Abs
+	((λy. if (5=y) 5 0 ) (2*3))
+==> E-App2 via E-Mul
+	((λy. if (5=y) 5 0 ) (6))
+==> E-App-Abs
+	(if (5=6) 5 0 )
+==> E-If
+	(if false 5 0 )
+==> E-If-False
+	0
+
+1.4
+	(((λf. λn. (f n)) (λx.4*x)) 7)
+==> E-App-Abs
+	((λn. ((λx.4*x) n)) 7)
+==> E-App-Abs
+	((λx.4*x) 7)
+==> E-App-Abs
+	(4*7)
+==> E-Mul
+	28
+
+1.5
+	((λxs. cons 3 xs) (if true (cons 2 nil) nil))
+==> E-App2 via E-If-True
+	((λxs. cons 3 xs) (cons 2 nil))
+==> E-App-Abs
+	( cons 3 (cons 2 nil))
+
+2.1
+	(not false)
+==> Expand not
+	((λa. (a false) true) false)
+==> E-App-Aps
+	(false false) true) 
+==> Expand false
+	((λx. λy. y) false) true)
+==> E-App1 via E-App-Abs
+	(λy. y) true)
+==> E-App-Abs
+	true
+
+2.2
+	((or true) false)
+==> Expand OR
+	(((λa. λb. (a a) b) true) false)
+==> E-App1 via E-App-Abs
+	(λb.(true true) b) false)
+==> E-App-Abs
+	(true true) false
+==> Expand true
+	((λx. λy. x) true) false
+==> E-App1 via E-App-Abs
+	(λy. true) false
+==> E-App-Abs
+	true
+
+2.3
+	((and true) false)
+==> Expand and
+	(((λa. λb. (a b) a) true) false)
+==> E-App1 via E-App-Abs
+	((λb. (true b) true) false)
+==> E-App-Abs
+	(true false) true)
+==> Expand true
+	((λx. λy. x) false) true)
+==> E-App-Abs
+	(λy. false) true)
+==> E-App-Abs
+	false
+
+2.4
+nand = λa. λb. (a (not b)) not a
+
+2.5
+	((nand true) false)
+==> Expand nand
+	(((λa. λb. (a (not b)) not a) true) false)
+==> E-App1 via E-App-Abs
+	((λb. (true (not b)) not true) false)
+==> E-App-Abs
+	((true (not false)) not true)
+==> Expand true
+	(((λx. λy. x) (not false)) not true)
+==> E-App1 via E-App2 (via question 1.1)
+	(((λx. λy. x) true) not true)
+==> E-App1 via E-App-Abs
+	((λy. true) not true)
+==> Expand not
+	((λy. true) (λa. (a false) true) true)
+==> E-App2 via E-App-Abs
+	((λy. true) (true false) true)
+==> Expand true
+	((λy. true) ((λx. λy. x) false) true)
+==> E-App2 via E-App-Abs
+	((λy. true) (λy. false) true)
+==> E-App2 via E-App-Abs
+	((λy. true) false
+==> E-App-Abs
+	true
+
+3.1
+a) E-orelse1 
+
